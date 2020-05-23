@@ -1,0 +1,130 @@
+1 REM Hubcap of Fortune by Kay Savetz, circa 1988. All of the ATASCII characters in this
+2 REM will be unreadable in this ASCII listing, sorry.
+10 POKE 82,0:IN=10000:DIM C$(40),A$(40),B$(40):GOOF=0:DIM USED$(26),PH$(20)
+20 USED$=" ":MONEY=0:DIM GUESS$(40)
+30 GOTO 100
+90 MONEY=ASC(C$)*ASC(C$)*ASC(C$):GOTO 760
+100 ? "} HUBCAP OF FORTUNE "
+110 ? :? "Uh, you've been 'led' into the studios  of WRD-TV, famous for their 24-hour"
+120 ? "broadcast of the infamous show, Hubcap  of Fortune. The last thing you remember"
+130 ? "was two big guys hitting you over the   head with a ceramic dalmation. That'll"
+140 ? "teach you not to walk in the Weird part of town...       ...Without a pit bull!"
+150 ? :? "You are now in a studio. Pat is babblingto himself: Once you buy a prize it's"
+160 ? "YOURS to keep.. no, it's yours to KEEP, er, IT is yours to keep.. uh..."
+170 ? "Vanna is practicing her letter-turning."
+180 ? :? "Well! It's only seconds 'till air time! Press RETURN to begin making a fool of"
+190 ? "yourself in front of ... well, at least twelve people! ";:GOSUB IN
+210 ? "}Strange music begins to play. The crowd cheers.. er, 'jeers'. A voice emanating"
+219 D=INT(RND(0)*99)+1
+220 ? "from nowhere announces that there's over$";D;".00 in prizes just waiting to be won!"
+230 ? "Vanna struts out from behind a curtian. She is wearing ";
+240 A=INT(RND(0)*11)+1
+250 IF A=1 THEN ? "nothing."
+260 IF A=2 THEN ? "a ceramic dalmation."
+270 IF A=3 THEN ? "an ugly dress."
+280 IF A=4 THEN ? "an ugly smile."
+285 IF A=5 THEN ? "fake eyelashes."
+290 IF A=6 THEN ? "a 'Impeach Mayor":? "Finchley' Tee-shirt."
+300 IF A=7 THEN ? "a wet tee-shirt."
+305 IF A=8 THEN ? "out the carpet."
+310 IF A=9 THEN ? "some stupid gown."
+320 IF A=10 THEN ? "her big nose."
+321 IF A=11 THEN ? "her bankbook."
+325 ? :? "Press RETURN";:GOSUB IN
+326 ? "}"
+330 D=INT(RND(0)*40)+1:RESTORE :FOR E=1 TO D:READ A$,A:NEXT E
+340 FOR D=1 TO LEN(A$):IF A$(D,D)>"Z" OR A$(D,D)<"A" THEN B$(D,D)=A$(D,D):NEXT D:GOTO 360
+350 B$(D,D)="-":NEXT D
+351 IF A=1 THEN PH$="Person"
+352 IF A=2 THEN PH$="People"
+353 IF A=3 THEN PH$="Place"
+354 IF A=4 THEN PH$="Title"
+355 IF A=5 THEN PH$="Thing"
+356 IF A=6 THEN PH$="Phrase"
+360 ? "}":? B$:? "       -";
+367 ? PH$;"         You have $";MONEY
+368 ? 
+370 ? "Press †”† to Spin the Hubcap.."
+371 ? "Hit   †¬† to Buy a vowel for $25.."
+372 ? "Bash  †‘† to Try to solve the puzzle!"
+380 ? :? "Type one of the above";:GOSUB IN
+390 IF C$<>"S" AND C$<>"B" AND C$<>"T" THEN ? "Please type S, B, or T.":FOR ST=1 TO 123:NEXT ST:GOTO 360
+400 IF C$<>"S" THEN 600
+401 ? "}":? B$:? "      -";PH$
+410 ? :? "You spin the Hubcap.":? :? "                ";
+420 FOR D=1 TO 100 STEP 4:E=INT(RND(0)*100)+1:? E;
+421 FOR F=1 TO LEN(STR$(E)):? "~";:NEXT F:NEXT D
+422 IF E>200 AND E<300 THEN ? "~~~BANKRUPT":MONEY=0:? :? "Oh.. too bad! (snicker) You lost ALL    your money!"
+423 IF E>200 AND E<300 THEN FOR D=1 TO 600:NEXT D:? "}":? :GOTO 360
+426 ? :? "The Hubcap stops at $";E;".":? :? "Now choose a letter..":? "Each time it's there you get a big $";E;".":? 
+440 ? "Used letters: ";USED$:? 
+450 ? "What letter do you want to try?";:GOSUB IN
+460 IF C$="A" OR C$="E" OR C$="I" OR C$="O" OR C$="U" THEN ? "You must †¬†uy a vowel.. Choose again!":GOTO 450
+465 IF ASC(C$)<65 OR ASC(C$)>90 THEN E=5:GOTO 591
+466 FOR ST=1 TO LEN(USED$):IF C$=USED$(ST,ST) THEN ? "You tried that letter already.":POP :GOTO 450
+467 NEXT ST
+470 F=0:FOR D=1 TO LEN(A$):IF C$=A$(D,D) THEN B$(D,D)=A$(D,D):F=F+1
+471 IF C$=A$(D,D) THEN MONEY=MONEY+D
+480 NEXT D
+482 IF C$(1,1)<"A" OR C$(1,1)>"Z" THEN FOR D=1 TO 100:GOTO 591
+485 USED$(LEN(USED$)+1,LEN(USED$)+1)=C$
+490 IF F=0 THEN ? :? "'Sorry, no ";C$;"'s for you there!'":? "Pat says with a smirk.":GOOF=GOOF+1:? 
+491 IF GOOF<5 THEN ? GOOF;" mistakes! (Get 5 & you LOSE!)"
+492 IF GOOF=5 THEN ? :? "The right answer was:":? A$:? 
+495 IF GOOF=5 THEN ? "'Sorry, that's 5 mistakes. You're outta  here!' You are pushed into the street"
+496 IF GOOF=5 THEN ? "with a box of Rice-a-roni.":? :? :? "BACK TO WEIRD CITY":END :REM ††††††††“≈‘’“Œ†‘œ†◊Æ√…‘Ÿ††††
+500 IF F>0 THEN ? :? "Wow! ";F;" ";C$;"'s for you!!"
+510 D=INT(RND(0)*10)+1:IF D<5 OR F=0 THEN FOR D=1 TO 800:NEXT D:? "}":? :GOTO 360
+515 ? :? 
+520 IF D=5 THEN ? "'Get outta my face, Pat!'"
+530 IF D=6 THEN ? "'Vanna! You and me can play the home    game!"
+540 IF D=7 THEN ? "Vanna, I don't mean to stare.. but are  you wearing underwear? (Not for ME to   say!)"
+550 IF D=8 THEN ? "Ey, Vanna! Is that an all-over tan?"
+560 IF D=9 THEN ? "Wow! I'll take that great ceramic       dalmation!"
+570 IF D=10 THEN ? "Whattya mean $500 for a portable black  and white five inch television set? My"
+580 IF D=10 THEN ? "brother can get it for you wholesale!"
+590 FOR D=1 TO 400:NEXT D:? "}":? :GOTO 360
+591 MONEY=MONEY+INT(E^E)
+592 ? "}":GOTO 760
+600 IF C$<>"B" THEN 700
+605 ? 
+606 IF MONEY<25 THEN ? "You don't have enough money to buy a    vowel!!":GOTO 665
+608 ? "Used letters: ";USED$:? 
+610 ? "Buy what vowel";:GOSUB IN
+620 IF C$<>"A" AND C$<>"E" AND C$<>"I" AND C$<>"O" AND C$<>"U" THEN ? "You can only buy a VOWEL! A;E;I;O; or U.":GOTO 610
+630 ? :? "That'll cost $25!"
+640 F=0:MONEY=MONEY-25:FOR D=1 TO LEN(A$):IF A$(D,D)=C$ THEN B$(D,D)=C$:F=F+1
+650 NEXT D
+660 ? "Ok. There were ";F;" ";C$;"'s..":? "And I just got $25. Wow!"
+661 USED$(LEN(USED$)+1,LEN(USED$)+1)=C$
+665 FOR D=1 TO 400:NEXT D
+670 ? "}":? :GOTO 360
+700 ? "}":? B$
+701 ? :? "'What's your guess?' Pat asks. Vanna    seems uneasy. The tension mounts.       You crave a bagel."
+702 ? :? "[Remember to use all CAPITALS and not toadd extra spaces or letters..]"
+710 ? :? "Your Guess";:GOSUB IN
+712 GUESS$=C$:? "}":? 
+720 IF GUESS$<>A$ THEN ? :? "No, bozo! That's not it! Geez!!! Vanna  is able to smile again."
+730 IF GUESS$<>A$ THEN GOOF=GOOF+1:? :? "That's a total of ";GOOF;" mistakes."
+735 IF GOOF=5 AND GUESS$<>A$ THEN ? "The correct answer was:":? A$
+740 IF GUESS$<>A$ AND GOOF=5 THEN ? :? "You're outta the game.. Idiot!!":? "Back to WEIRD CITY!":END :REM .‚·„Î†ÙÔ†ÙËÂ†‚‚ÛÆÆ
+750 IF GUESS$<>A$ THEN FOR D=1 TO 400:NEXT D:? "}":? :GOTO 360
+760 ? :? "You got it!":? 
+770 ? "Pat and Vanna begin to cry. 'There goes our paychecks.'"
+780 ? "               YOU WON! CONGRADS!"
+790 ? :? "You leave the game with $";MONEY:? "..and a ceramic dalmation! BYE!"
+800 END :REM ¬¡√À†‘œ†◊≈…“ƒ†√…‘Ÿ
+801 REM ®…‘ß”†…Œ†‘»≈†÷¡“…¡¬Ã≈†ßÕœŒ≈Ÿß¨†œ∆†√œ’“”≈ÆÆÆÆ©
+5000 DATA MAYOR FINCHLEY,1,RED STORM RISING,4,KING HENRY VIII,1,GEORGE BUSH,1,BEVERLY HILLS COP,4
+5001 DATA THE BIG APPLE,3,RONALD REAGAN,1,WEIRD CITY,3,WAR AND PEACE,4,PHONE BOOK,5
+5002 DATA SIXTY MINUTES,4,ATARI COMPUTER,5,THE CITY JANITOR,1,THE GETTYSBURG ADDRESS,4,HAPPY TRAILS TO YOU,4
+5003 DATA A PENNY SAVED IS A PENNY EARNED,6,BEN FRANKLIN,1,WHEEL OF FORTUNE,4,CUP OF COFFEE,5,ICED TEA,5
+5004 DATA HAVE A NICE DAY,6,MISTER ED,4,LIKE A VIRGIN,4,JACK TRAMIEL,1,WEIRD AL YANKOVIC,1
+5005 DATA THE GOLDEN STATE,3,BEVERLY HILLS,3,STEPHEN KING,1,TIME MAGAZINE,4,THE HITCHHIKER'S GUIDE TO THE GALAXY,4
+5006 DATA LOU THE CITY CLERK,1,DRAZIL T. REPTILLIAN,1,IN ONE EAR AND OUT THE OTHER,6,BANNANA,5,CHEWING GUM,5
+5007 DATA BULLETIN BOARD SYSTEM,4,DOCTOR DEMENTO,1,DEMOCRATS,2,UNIVERSAL STUDIOS,3,THE FAR SIDE,4
+9999 END 
+10000 TRAP 10000:? "__>";:INPUT #16,C$
+10001 IF C$="QUIT" THEN END :REM ¬¡√À†‘œ†◊≈…“ƒ†√…‘Ÿ
+10002 RETURN 
+20000 ? "SHITHEAD"
